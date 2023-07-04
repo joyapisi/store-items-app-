@@ -1,5 +1,5 @@
 class Source
-    attr_reader :id, :name,
+    attr_reader :id, :name
     attr_accessor :items
 
     def initialize(id,name,items)
@@ -9,6 +9,7 @@ class Source
     end
 
     def add_source
-
+        @items << item
+        item.source = self
     end
 end
