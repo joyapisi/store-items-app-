@@ -11,7 +11,7 @@ class Item
   end
 
   def can_be_archived?
-    publish_date < (Date.today - 10 * 365)
+    publish_date < (Date.today - (10 * 365))
   end
 
   def move_to_archive
