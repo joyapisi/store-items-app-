@@ -17,5 +17,4 @@ class Item
   def move_to_archive
     self.archived = can_be_archived?
   end
-
 end
