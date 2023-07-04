@@ -144,13 +144,21 @@ If you think that change is necessary - open a Pull Request in this repository a
 
 ## 👥 Authors <a name="authors"></a>
 
-👤 **Joy Phoebe**
+🧔🏾 :bust_in_silhouette: **KUBAHO LINNE Heaven**
+- GitHub: [@KUBAHO3](https://github.com/KUBAHO3)
+- Twitter: [@KubahoH](https://twitter.com/KubahoH)
+- LinkedIn: [Kubaho Linne Heaven](https://www.linkedin.com/in/kubaho-linne-heaven/)
 
-- GitHub: (https://github.com/joyapisi)
-- Twitter: (https://twitter.com/joyapisi)
-- LinkedIn: (https://linkedin.com/in/joy-phoebe-00b80a13a)
+👧🏾 :bust_in_silhouette: **Joy Phoebe**
+- GitHub: [@joyapisi](https://github.com/joyapisi)
+- Twitter: [@joyphoebe300](https://twitter.com/joyphoebe300)
+- LinkedIn: [Joy Phoebe](https://www.linkedin.com/in/joyapisi/)
 
-## 🤝 Contributing <a name="contributing"></a>
+
+🧔🏾 :bust_in_silhouette: **Aimable BANCUNGUYE**
+- GitHub: [@joyapisi](https://github.com/BANCUNGUYE66)
+- Twitter: [@bancunguye66](https://twitter.com/bancunguye66)
+- LinkedIn: [Aimable (Emma) BANCUNGUYE](https://www.linkedin.com/in/aimable-bancunguye/)
 
 - GitHub: (https://github.com/Shaheryar0054)
 
