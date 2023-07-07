@@ -15,6 +15,6 @@ class Author
 
   def add_item(item)
     @items << item
-    item.author = self # Set the author property of the item object
+    item.add_author = self # Set the author property of the item object
   end
 end

@@ -6,7 +6,7 @@ describe MusicAlbum do
   end
 
   it 'Should return a MusicAlbum object' do
-    expect(@music_album).to be_an_instance_of MusicAlbum
+    expect(@music_album.instance_of?(MusicAlbum)).to be(true)
   end
 
   describe '#name' do

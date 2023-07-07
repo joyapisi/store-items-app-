@@ -1,105 +1,112 @@
-require './item'
+require_relative 'books_operation'
+require_relative 'music_genre_op'
+require_relative 'game'
+require_relative 'author'
+require_relative 'game_handler'
+require_relative 'author_handler'
 
 def options
-  puts 'Welcome to our Application'
-  puts 'Please Choose from below options by number',
+  puts '----------------------------------------------',
+       'Please Choose from below options by number',
        '1-List all books',
        '2-List all music albums',
-       '3-List all movies',
-       '4-List of games',
-       '5-List all genres (e.g "Comedy", "Thriller")',
-       '6-List all labels (e.g. Gift, New)',
-       '7-List all authors (e.g. Stephen King)',
-       '8-List all sources (e.g. From a friend, Online shop)',
-       '9-Add a book',
-       '10-Add a music album',
-       '11-Add a movie',
-       '12-Add a game',
-       '13-Quit Application'
+       '3-List of games',
+       '4-List all genres (e.g "Comedy", "Thriller")',
+       '5-List all labels (e.g. Gift, New)',
+       '6-List all authors (e.g. Stephen King)',
+       '7-Add a book',
+       '8-Add a music album',
+       '9-create a genre',
+       '10-Add a game',
+       '11-Quit Application',
+       '----------------------------------------------'
 end
 
 def connection
+  music_genre_operation = Operations.new
+  books_operation = BookHandler.new
+  methods_operation = [books_operation, music_genre_operation]
+
+  authors = []
+  author_handler = AuthorHandler.new(authors)
+  author_handler.load_authors_from_json
+
+  games = load_games_from_json
+  game_handler = GameHandler.new(games)
+  methods_operation = [books_operation, music_genre_operation, game_handler, author_handler]
+
   loop do
     options
     number = gets.chomp.to_i
-    break if number == 13
+    break if number == 11
 
-    user_input(number)
+    user_input(methods_operation, number, authors)
   end
-  puts 'Thank you for using our App'
+
+  puts 'Thank you for using our App!'
+  music_genre_operation.keeping_data
+  books_operation.keeping_data
 end
 
-ACTIONS = {
-  1 => :list_books,
-  2 => :list_music_albums,
-  3 => :list_movies,
-  4 => :list_games,
-  5 => :list_genres,
-  6 => :list_labels,
-  7 => :list_authors,
-  8 => :list_sources,
-  9 => :add_book,
-  10 => :add_music,
-  11 => :add_movie,
-  12 => :add_game
-}.freeze
+def load_games_from_json
+  if File.exist?('games.json')
+    json_data = File.read('games.json')
+    JSON.parse(json_data).map do |game_data|
+      Game.new(game_data['title'], game_data['multiplayer'], Date.parse(game_data['last_played_at']))
+    end
+  else
+    []
+  end
+end
 
-def user_input(number)
-  action = ACTIONS[number]
+def user_input(methods_operation, number, authors)
+  books_operation, music_genre_operation, game_handler, author_handler = methods_operation
 
+  actions = {
+    1 => lambda {
+           books_operation.list_books
+         },
+    2 => -> { music_genre_operation.list_music_albums },
+    3 => -> { game_handler.list_games },
+    4 => -> { music_genre_operation.list_genres },
+    5 => lambda {
+           books_operation.list_labels
+         },
+    6 => lambda {
+           puts 'No authors available in the list yet!' if authors.empty?
+           author_handler.list_authors
+         },
+    7 => -> { books_operation.add_a_book },
+    8 => -> { music_genre_operation.add_music },
+    9 => -> { music_genre_operation.create_genre },
+    10 => lambda {
+            puts 'No games available in the list yet!' if game_handler.games.empty?
+            game_handler.add_game
+          }
+  }
+
+  action = actions[number]
   if action
-    send(action)
+    action.call
   else
     puts 'Invalid number entered'
   end
 end
 
-def list_books
-  puts 'book list'
-end
+def list_authors(authors)
+  puts 'Enter the author name or part of the name:'
+  name = gets.chomp.downcase
 
-def list_music_albums
-  # code to list all music albums
-end
+  filtered_authors = authors.select { |author| author.full_name.downcase.include?(name) }
 
-def list_movies
-  # code to list all movies
-end
-
-def list_games
-  # code to list all games
-end
-
-def list_genres
-  # code to list all genres
-end
-
-def list_labels
-  # code to list all labels
-end
-
-def list_authors
-  # code to list all authors
-end
-
-def list_sources
-  # code to list all sources
-end
-
-def add_book
-  # code to add a new book
-end
-
-def add_music
-  # code to add a new music album
-end
-
-def add_movie
-  # code to add a new movie
-end
-
-def add_game
-  # code to add a new game
+  if filtered_authors.empty?
+    puts 'No authors found with the provided name.'
+  else
+    puts 'Authors matching the provided name:'
+    filtered_authors.each do |author|
+      puts author.full_name
+    end
+  end
 end
 
 connection
